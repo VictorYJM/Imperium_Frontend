@@ -82,6 +82,11 @@ export default function LoginPage() {
                                 {isLoading ? "Loading..." : "Sign In"}
                             </Button>
                         </div>
+
+                        <h1 className="block text-sm font-medium text-text-primary mb-2">
+                            Not sign up?
+                            <a href="/register" className="text-blue-600 decoration-2 hover:underline"> Click here!</a>
+                        </h1>
                     </form>
                 </div>
             </div>

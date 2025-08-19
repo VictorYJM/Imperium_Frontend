@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { AuthStore } from "../types";
+import type { AuthStore, Profile } from "../types";
 
 export const useAuthStore = create<AuthStore>((set) => ({
     session: null,
@@ -13,7 +13,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
         });
     },
 
-    setProfile: (profile) => {
+    setProfile: (profile: Profile | null) => {
         set({ profile: profile });
     },
 

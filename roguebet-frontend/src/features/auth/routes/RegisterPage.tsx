@@ -19,9 +19,24 @@ export default function RegisterPage() {
         setError(null);
 
         try {
+             const { data: emailExists, error: rpcError } = await supabase.rpc("check_email_exists", { p_email: email });
+
+            if (rpcError) { throw rpcError; }
+
+            if (emailExists) {
+                setError("Email already in use!");
+                setIsLoading(false);
+                return;
+            }
+
             const { error } = await supabase.auth.signUp({
                 email: email,
                 password: password,
+                options: {
+                    data: {
+                        username: username,
+                    }
+                }
             });
 
             if (error) { throw error; }
@@ -61,7 +76,7 @@ export default function RegisterPage() {
 
                         <div>
                             <label htmlFor="password" className="block text-sm font-medium text-text-secondary mb-2">
-                                Password
+                                Password (6+ characters)
                             </label>
                             <Input
                                 id="password"
@@ -97,6 +112,11 @@ export default function RegisterPage() {
                                 {isLoading ? "Loading..." : "Sign Up"}
                             </Button>
                         </div>
+
+                        <h1 className="block text-sm font-medium text-text-primary mb-2">
+                            Already have an account?
+                            <a href="/login" className="text-blue-600 decoration-2 hover:underline"> Click here!</a>
+                        </h1>
                     </form>
                 </div>
             </div>
